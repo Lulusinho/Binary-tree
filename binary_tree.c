@@ -36,18 +36,41 @@ void treeinsert(Btree **tree, int number)
         treeinsert(&(*tree)->right, number);
 }
 
-int searchtree(Btree **tree, int number)
+void treesearch(Btree **tree, int number)
 {
     if ((*tree)->number == number)
     {
-        return (*tree)->number;
+        printf("%d", (*tree)->number);
     }
     else if ((*tree) != NULL)
     {
         if (number < (*tree)->number)
-            searchtree(&(*tree)->left, number);
+            treesearch(&(*tree)->left, number);
         else
-            searchtree(&(*tree)->right, number);
+            treesearch(&(*tree)->right, number);
+    }
+}
+
+int treeremove(Btree **tree, int number)
+{
+}
+
+int treeheight(Btree **tree)
+{
+
+    if ((*tree) == NULL)
+        return 0;
+
+    int left = treeheight(&(*tree)->left);
+    int right = treeheight(&(*tree)->right);
+
+    if (right >= left)
+    {
+        return right + 1;
+    }
+    else
+    {
+        return left + 1;
     }
 }
 

@@ -22,6 +22,10 @@ int main(int argc, char *argv){
     treeorder(&tree);
     printf("\npostorder:\n ");
     treepostorder(&tree);
+    printf("\n");
+
+
+    printf("\n The height of this tree: %d", treeheight(&tree));
     
     return 0;
 }
