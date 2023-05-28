@@ -27,12 +27,28 @@ void treeinsert(Btree **tree, int number)
         Btree *node = allocnode(number);
         (*tree) = node;
     }
-    else if (number < (*tree)->number){
+    else if (number < (*tree)->number)
+    {
 
         treeinsert(&(*tree)->left, number);
     }
     else
         treeinsert(&(*tree)->right, number);
+}
+
+int searchtree(Btree **tree, int number)
+{
+    if ((*tree)->number == number)
+    {
+        return (*tree)->number;
+    }
+    else if ((*tree) != NULL)
+    {
+        if (number < (*tree)->number)
+            searchtree(&(*tree)->left, number);
+        else
+            searchtree(&(*tree)->right, number);
+    }
 }
 
 void treepreorder(Btree **tree)
