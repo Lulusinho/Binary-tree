@@ -4,8 +4,8 @@
 struct binary_tree
 {
     int number;
-    struct binarie_tree *left;
-    struct binarie_tree *right;
+    struct binary_tree *left;
+    struct binary_tree *right;
 
 } typedef Btree;
 
@@ -27,14 +27,40 @@ void treeinsert(Btree **tree, int number)
         Btree *node = allocnode(number);
         (*tree) = node;
     }
-    else if (number < (*tree)->number)
-        treeinsert((*tree)->left, number);
+    else if (number < (*tree)->number){
+
+        treeinsert(&(*tree)->left, number);
+    }
     else
-        treeinsert((*tree)->right, number);
+        treeinsert(&(*tree)->right, number);
 }
 
-void treedisplay(Btree **tree){
-    treedisplay((*tree)->left);
-    treedisplay((*tree)->right);
-    printf("|%d |", (*tree)->number);
+void treepreorder(Btree **tree)
+{
+    if ((*tree) != NULL)
+    {
+        printf("|%d |", (*tree)->number);
+        treepreorder(&(*tree)->left);
+        treepreorder(&(*tree)->right);
+    }
+}
+
+void treeorder(Btree **tree)
+{
+    if ((*tree) != NULL)
+    {
+        treeorder(&(*tree)->left);
+        printf("|%d |", (*tree)->number);
+        treeorder(&(*tree)->right);
+    }
+}
+
+void treepostorder(Btree **tree)
+{
+    if ((*tree) != NULL)
+    {
+        treepostorder(&(*tree)->left);
+        treepostorder(&(*tree)->right);
+        printf("|%d |", (*tree)->number);
+    }
 }
