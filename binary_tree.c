@@ -51,8 +51,41 @@ void treesearch(Btree **tree, int number)
     }
 }
 
-int treeremove(Btree **tree, int number)
+void treeremove(Btree **tree, int object)
 {
+    Btree *aux = (*tree);
+    if ((*tree) == NULL)
+    {
+        printf("[ERRO] Arvore vazia");
+    }
+    else if (object < (*tree)->number)
+    {
+        treeremove(&(*tree)->left, object);
+    }
+    else if (object > (*tree)->number)
+    {
+        treeremove(&(*tree)->right, object);
+    }
+    else if (object == (*tree)->number)
+    {
+        if ((*tree)->left == NULL && (*tree)->right == NULL)
+            free(aux);
+    }   else if (aux->left != NULL)
+    {
+        aux = aux->left;
+        
+    }
+    
+}
+
+void treedeleteALL(Btree **tree)
+{
+    if ((*tree) != NULL)
+    {
+        treedeleteALL(&(*tree)->left);
+        treedeleteALL(&(*tree)->right);
+        free((*tree));
+    }
 }
 
 int treeheight(Btree **tree)
