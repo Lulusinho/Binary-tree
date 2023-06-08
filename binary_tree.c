@@ -36,46 +36,64 @@ void treeinsert(Btree **tree, int number)
         treeinsert(&(*tree)->right, number);
 }
 
-void treesearch(Btree **tree, int number)
+Btree *treesearch(Btree **tree, int number)
 {
     if ((*tree)->number == number)
     {
-        printf("%d", (*tree)->number);
+        return (*tree);
     }
     else if ((*tree) != NULL)
     {
         if (number < (*tree)->number)
-            treesearch(&(*tree)->left, number);
+        {
+            Btree *aux1 = treesearch(&(*tree)->left, number);
+        }
         else
-            treesearch(&(*tree)->right, number);
+        {
+            Btree *aux1 = treesearch(&(*tree)->right, number);
+        }
     }
 }
 
-void treeremove(Btree **tree, int object)
+Btree *treeremoveNODE(Btree *tree, int object)
+{if (tree == NULL)
 {
-    Btree *aux = (*tree);
-    if ((*tree) == NULL)
+        return tree;
+}
+
+    else if (object < tree->number)
     {
-        printf("[ERRO] Arvore vazia");
+        tree->left = treeremoveNODE(tree->left, object);
     }
-    else if (object < (*tree)->number)
+    else if (object > tree->number)
     {
-        treeremove(&(*tree)->left, object);
+       tree->left = treeremoveNODE(tree->right, object);
     }
-    else if (object > (*tree)->number)
+    else
     {
-        treeremove(&(*tree)->right, object);
+        if (tree->left == NULL)
+        {
+            Btree *temp = tree->right;
+            free(tree);
+            return temp;
+        }
+        else if (tree->right == NULL)
+        {
+            Btree *temp = tree->left;
+            free(tree);
+            return temp;
+        }
+
+        Btree *temp = tree;
+        while (temp && temp->left != NULL)
+        {
+            temp = temp->left;
+        }
+        tree->number = temp->number;
+
+        tree->right = treeremoveNODE(tree->right, object);
     }
-    else if (object == (*tree)->number)
-    {
-        if ((*tree)->left == NULL && (*tree)->right == NULL)
-            free(aux);
-    }   else if (aux->left != NULL)
-    {
-        aux = aux->left;
-        
-    }
-    
+        return tree;
 }
 
 void treedeleteALL(Btree **tree)
